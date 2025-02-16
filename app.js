@@ -5,17 +5,23 @@ const Product = require('./models/product'); // ✅ Ensure correct import
 const User = require('./models/user');
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
+require('dotenv').config()
 const cors = require('cors')
 
 const secretKey = "secret123"
 const app = express();
-const port = 3000;
-app.use(cors())
+const port = process.env.PORT
+app.use(cors(
+    {
+        origin:"https://moduleend6-frontend.onrender.com"
+    }
+))
 app.use(express.json());
 
 // ✅ MongoDB Connection 
+const url = process.env.MONGODB_URL
 async function main() {
-    await mongoose.connect('mongodb+srv://athulk8888:1234@e-48.boyru.mongodb.net/e48db', );
+    await mongoose.connect(url);
 }
 
 main()
@@ -164,4 +170,4 @@ app.post('/login', async (req,res)=>{
     }
 })
 
-app.listen(port, () => console.log(`🚀 Server started on port ${port}`));
+app.listen(port, () => console.log(`🚀 Server started on port ${process.env.PORT}`));
